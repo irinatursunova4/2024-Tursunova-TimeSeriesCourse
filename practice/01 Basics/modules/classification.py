@@ -10,63 +10,51 @@ default_metrics_params = {'euclidean': {'normalize': True},
 
 class TimeSeriesKNN:
     """
-    KNN Time Series Classifier.
+    KNN Time Series Classifier
 
     Parameters
     ----------
-    n_neighbors : int, default = 3
-        Number of neighbors.
-    
-    metric : str, default = 'euclidean'
-        Distance measure between time series.
-        Options: {euclidean, dtw}.
-
-    metric_params : dict, default = None
-        Dictionary containing parameters for the distance metric being used.
+    n_neighbors : number of neighbors
+    metric : distance measure between time series
+             Options: {euclidean, dtw}
+    metric_params : dictionary containing parameters for the distance metric being used
     """
     
-    def __init__(self, n_neighbors=3, metric='euclidean', metric_params=None):
+    def __init__(self, n_neighbors: int = 3, metric: str = 'euclidean', metric_params: dict | None = None) -> None:
 
-        self.n_neighbors = n_neighbors
-        self.metric = metric
-        self.metric_params = default_metrics_params[metric].copy()
+        self.n_neighbors : int = n_neighbors
+        self.metric : str = metric
+        self.metric_params : dict | None = default_metrics_params[metric].copy()
         if metric_params is not None:
             self.metric_params.update(metric_params)
 
 
-    def fit(self, X_train, Y_train):
+    def fit(self, X_train: np.ndarray, Y_train: np.ndarray) -> None:
         """
-        Fit the model using X_train as training data and Y_train as labels.
+        Fit the model using X_train as training data and Y_train as labels
 
         Parameters
         ----------
-        X_train : numpy.ndarrray (2d array of shape (ts_number, ts_length))
-            The train set.
-        
-        Y_train : numpy.ndarrray
-            Labels of the train set.
+        X_train : train set with shape (ts_number, ts_length)
+        Y_train : labels of the train set
         """
        
-        self.X_train = X_train.to_numpy()
-        self.Y_train = Y_train.to_numpy()
+        self.X_train = X_train
+        self.Y_train = Y_train
 
 
-    def _distance(self, x_train, x_test):
+    def _distance(self, x_train: np.ndarray, x_test: np.ndarray) -> float:
         """
-        Compute distance between the train and test samples.
+        Compute distance between the train and test samples
         
         Parameters
         ----------
-        x_train : numpy.ndarrray
-            Sample of the train set.
-        
-        x_test : numpy.ndarrray
-            Sample of the test set.
+        x_train : sample of the train set
+        x_test : sample of the test set
         
         Returns
         -------
-        dist : float
-            The distance between the train and test samples.
+        dist : distance between the train and test samples
         """
 
         dist = 0
@@ -76,66 +64,58 @@ class TimeSeriesKNN:
         return dist
 
 
-    def _find_neighbors(self, x_test):
+    def _find_neighbors(self, x_test: np.ndarray) -> list[tuple[float, int]]:
         """
-        Find the k nearest neighbors of the test sample.
+        Find the k nearest neighbors of the test sample
 
         Parameters
         ----------
-        x_test : numpy.ndarray
-            Sample of the test set.
+        x_test : sample of the test set
         
         Returns
         -------
-        neighbors : list of tuples (float, int)
-            k nearest neighbors (distance between neighbor and test sample, neighbor label) for test sample.
+        neighbors : k nearest neighbors (distance between neighbor and test sample, neighbor label) for test sample
         """
 
         neighbors = []
-        
+
         # INSERT YOUR CODE
 
         return neighbors
 
 
-    def predict(self, X_test):
+    def predict(self, X_test: np.ndarray) -> list[int]:
         """
-        Predict the class labels for samples of the test set.
+        Predict the class labels for samples of the test set
 
         Parameters
         ----------
-        X_test : numpy.ndarray (2d array of shape (ts_number, ts_length))
-            The test set.
+        X_test : test set with shape (ts_number, ts_length))
 
         Returns
         -------
-        y_pred : list
-            Class labels for each data sample from test set.
+        y_pred : class labels for each data sample from test set
         """
 
         y_pred = []
 
         # INSERT YOUR CODE
 
-        return y_pred
+        return np.array(y_pred)
 
 
-def calculate_accuracy(y_true, y_pred):
+def calculate_accuracy(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """
-    Calculate accuracy classification score.
+    Calculate accuracy classification score
 
     Parameters
     ----------
-    y_true : numpy.ndarray
-        Ground truth (correct) labels.
-
-    y_pred : numpy.ndarray
-        Predicted labels returned by a classifier.
+    y_true : ground truth (correct) labels
+    y_pred : predicted labels returned by a classifier
 
     Returns
     -------
-    score : float
-        Accuracy classification score.
+    score : accuracy classification score
     """
 
     score = 0
