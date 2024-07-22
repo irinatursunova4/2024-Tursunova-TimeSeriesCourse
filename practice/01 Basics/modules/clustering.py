@@ -1,6 +1,8 @@
 import numpy as np
+import pandas as pd
 from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import dendrogram
+from typing_extensions import Self
 
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -8,37 +10,30 @@ import matplotlib.gridspec as gridspec
 
 class TimeSeriesHierarchicalClustering:
     """
-    Hierarchical Clustering of time series.
+    Hierarchical Clustering of time series
 
     Parameters
     ----------
-
-    n_clusters : int, default = 3
-        The number of clusters.
-    
-    method : str, default = 'complete'
-        The linkage criterion.
-        Options: {single, complete, average, weighted}.
-
-    model : sklearn object
-        An sklearn agglomerative clustering.
+    n_clusters : number of clusters
+    method : linkage criterion.
+             Options: {single, complete, average, weighted}
     """
 
-    def __init__(self, n_clusters=2, method='complete'):
+    def __init__(self, n_clusters: int = 3, method: str = 'complete') -> None:
 
-        self.n_clusters = n_clusters
-        self.method = method
-        self.model = None
+        self.n_clusters : int = n_clusters
+        self.method : str = method
+        self.model : AgglomerativeClustering | None = None
+        self.linkage_matrix : np.ndarray | None = None
 
 
-    def _create_linkage_matrix(self):
+    def _create_linkage_matrix(self) -> np.ndarray:
         """
-        Build the linkage matrix.
+        Build the linkage matrix
 
         Returns
         -------
-        linkage matrix : numpy.ndarray
-            The linkage matrix.
+        linkage matrix : linkage matrix
         """
 
         counts = np.zeros(self.model.children_.shape[0])
@@ -58,46 +53,53 @@ class TimeSeriesHierarchicalClustering:
         return linkage_matrix
 
 
-    def fit(self, distance_matrix):
+    def fit(self, distance_matrix: np.ndarray) -> Self:
         """
-        Fit the agglomerative clustering model based on distance matrix.
+        Fit the agglomerative clustering model based on distance matrix
 
         Parameters
         ----------
-        distance_matrix : numpy.ndarray (2d array of shape (ts_number, ts_number))
-            The distance matrix between instances of dataset.
+        distance_matrix : distance matrix between instances of dataset with shape (ts_number, ts_number)
         
         Returns
         -------
-        self: object
-            The fitted model.
+        self : the fitted model
         """
 
-         # INSERT YOUR CODE
-          
+       # INSERT YOUR CODE
+
         return self
 
 
-    def _draw_timeseries_allclust(self, dx, labels, leaves, gs, ts_hspace):
-        """ 
-        Plot time series graphs beside dendrogram.
+    def fit_predict(self, distance_matrix: np.ndarray) -> np.ndarray:
+        """
+        Fit the agglomerative clustering model based on distance matrix and predict classes
 
         Parameters
         ----------
-        dx : dataframe 
-            The original timeseries data with column "y" indicating cluster number.
-
-        labels : numpy.ndarray
-            Labels of dataset's instances.
-
-        leaves : list 
-            Leave node names from scipy dendrogram.
+        distance_matrix : distance matrix between instances of dataset with shape (ts_number, ts_number)
         
-        gs : matplotlib object
-            Gridspec configurations.
-        
-        ts_hspace : int
-            Horizontal space in gridspec for plotting time series.
+        Returns
+        -------
+            predicted labels 
+        """
+
+        self.fit(distance_matrix)
+
+        return self.labels_
+
+
+    def _draw_timeseries_allclust(self, dx: pd.DataFrame, labels: np.ndarray, leaves: list[int], gs: gridspec.GridSpec, ts_hspace: int) -> None:
+        """ 
+        Plot time series graphs beside dendrogram
+
+        Parameters
+        ----------
+        dx : timeseries data with column "y" indicating cluster number
+        labels : labels of dataset's instances
+        leaves : leave node names from scipy dendrogram
+        gs : gridspec configurations
+        ts_hspace : horizontal space in gridspec for plotting time series
         """
 
         prop_cycle = plt.rcParams['axes.prop_cycle']
@@ -124,23 +126,16 @@ class TimeSeriesHierarchicalClustering:
             plt.text(ts_len+margin, 0, f'class = {label}')
 
 
-    def plot_dendrogram(self, df, labels, ts_hspace=12, title='Dendrogram'):
+    def plot_dendrogram(self, df: pd.DataFrame, labels: np.ndarray, ts_hspace: int = 12, title: str = 'Dendrogram') -> None:
         """ 
         Draw agglomerative clustering dendrogram with timeseries graphs for all clusters.
 
         Parameters
         ----------
-        df : dataframe 
-            Dataframe with each row being the time window of readings.
-
-        labels : numpy.ndarray
-            Labels of dataset's instances.
-
-        ts_hspace : int, default = 12
-            Horizontal space for timeseries graph to be plotted.
-
-        title : str, default = 'Dendrogram'
-            Title of dendrogram.
+        df : dataframe with each row being the time window of readings
+        labels : labels of dataset's instances
+        ts_hspace : horizontal space for timeseries graph to be plotted
+        title : title of dendrogram
         """
 
         max_cluster = len(self.linkage_matrix) + 1
@@ -159,5 +154,4 @@ class TimeSeriesHierarchicalClustering:
 
         ddata = dendrogram(self.linkage_matrix, orientation="left", color_threshold=sorted(self.model.distances_)[-2], show_leaf_counts=True)
 
-        self._draw_timeseries_allclust(df, labels, ddata["leaves"], gs, ts_hspace)        
-        
+        self._draw_timeseries_allclust(df, labels, ddata["leaves"], gs, ts_hspace)
