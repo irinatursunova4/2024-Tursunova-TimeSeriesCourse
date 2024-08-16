@@ -34,7 +34,7 @@ def plot_ts_set(ts_set, title='Input Time Series Set'):
                      title='Time',
                      title_font=dict(size=22, color='black'),
                      linecolor='#000',
-                     ticks="outside",
+                     ticks='outside',
                      tickfont=dict(size=18, color='black'),
                      linewidth=2,
                      tickwidth=2)
@@ -42,15 +42,14 @@ def plot_ts_set(ts_set, title='Input Time Series Set'):
                      title='Values',
                      title_font=dict(size=22, color='black'),
                      linecolor='#000',
-                     ticks="outside",
+                     ticks='outside',
                      tickfont=dict(size=18, color='black'),
                      zeroline=False,
                      linewidth=2,
                      tickwidth=2)
-
     fig.update_layout(title=title,
                       title_font=dict(size=24, color='black'),
-                      plot_bgcolor="rgba(0,0,0,0)",
+                      plot_bgcolor='rgba(0,0,0,0)',
                       paper_bgcolor='rgba(0,0,0,0)',
                       legend=dict(font=dict(size=20, color='black'))
                       )
@@ -58,84 +57,18 @@ def plot_ts_set(ts_set, title='Input Time Series Set'):
     fig.show(renderer="colab")
 
 
-def plot2d(x, y, plot_title, x_title, y_title):
+def mplot2d(x: np.ndarrray, y: np.ndarrray, plot_title: str = None, x_title: str = None, y_title: str = None, trace_titles: np.ndarray = None):
     """
-    2D Plot on figure for different experiments.
+    Multiple 2D Plots on figure for different experiments
 
     Parameters
     ----------
-    x : numpy.ndarrray
-        Values of x axis of plot.
-
-    y : numpy.ndarrray
-        Values of y axis of plot.
-    
-    plot_title : str
-        Title of plot.
-
-    x_title : str
-        Title of x axis of plot.
-
-    y_title : str
-        Title of y axis of plot.
-    """
-
-    fig = go.Figure()
-
-    fig.add_trace(go.Scatter(x=x, y=y))
-
-    fig.update_xaxes(showgrid=False,
-                     title=x_title,
-                     title_font=dict(size=22, color='black'),
-                     linecolor='#000',
-                     ticks="outside",
-                     tickfont=dict(size=18, color='black'),
-                     linewidth=2,
-                     tickwidth=2,
-                     mirror=True)
-    fig.update_yaxes(showgrid=False,
-                     title=y_title,
-                     title_font=dict(size=22, color='black'),
-                     linecolor='#000',
-                     ticks="outside",
-                     tickfont=dict(size=18, color='black'),
-                     zeroline=False,
-                     linewidth=2,
-                     tickwidth=2,
-                     mirror=True)
-
-    fig.update_layout(title={'text': plot_title, 'x': 0.5, 'xanchor': 'center'},
-                      title_font=dict(size=24, color='black'),
-                      plot_bgcolor="rgba(0,0,0,0)",
-                      paper_bgcolor='rgba(0,0,0,0)',
-                      width=700)
-
-    fig.show(renderer="colab")
-
-
-def mplot2d(x, y, plot_title=None, x_title=None, y_title=None, trace_titles=None):
-    """
-    Multiple 2D Plots on figure for different experiments.
-
-    Parameters
-    ----------
-    x : numpy.ndarrray
-        Values of x axis of plot.
-
-    y : numpy.ndarrray
-        Values of y axis of plot.
-    
-    plot_title : str
-        Title of plot.
-
-    x_title : str
-        Title of x axis of plot.
-
-    y_title : str
-        Title of y axis of plot.
-
-    trace_titles : numpy.ndarrray
-        Titles of plots.
+    x : values of x axis of plot
+    y : values of y axis of plot
+    plot_title : title of plot
+    x_title : title of x axis of plot
+    y_title : title of y axis of plot
+    trace_titles : titles of plot traces (lines)
     """
 
     fig = go.Figure()
@@ -147,7 +80,7 @@ def mplot2d(x, y, plot_title=None, x_title=None, y_title=None, trace_titles=None
                      title=x_title,
                      title_font=dict(size=22, color='black'),
                      linecolor='#000',
-                     ticks="outside",
+                     ticks='outside',
                      tickfont=dict(size=18, color='black'),
                      linewidth=2,
                      tickwidth=2,
@@ -156,15 +89,14 @@ def mplot2d(x, y, plot_title=None, x_title=None, y_title=None, trace_titles=None
                      title=y_title,
                      title_font=dict(size=22, color='black'),
                      linecolor='#000',
-                     ticks="outside",
+                     ticks='outside',
                      tickfont=dict(size=18, color='black'),
                      zeroline=False,
                      linewidth=2,
                      tickwidth=2)
-
     fig.update_layout(title={'text': plot_title, 'x': 0.5, 'xanchor': 'center'},
                       title_font=dict(size=24, color='black'),
-                      plot_bgcolor="rgba(0,0,0,0)",
+                      plot_bgcolor='rgba(0,0,0,0)',
                       paper_bgcolor='rgba(0,0,0,0)',
                       legend=dict(font=dict(size=20, color='black')),
                       width=1000,
@@ -174,17 +106,14 @@ def mplot2d(x, y, plot_title=None, x_title=None, y_title=None, trace_titles=None
     fig.show(renderer="colab")
 
 
-def plot_bestmatch_data(ts, query):
+def plot_bestmatch_data(ts: np.ndarrray, query: np.ndarray) -> None:
     """
-    Visualize the input data (time series and query) for the best match task.
+    Visualize the input data (time series and query) for the best match task
 
     Parameters
     ----------
-    ts : numpy.ndarrray
-        Time series.
-
-    query : numpy.ndarrray
-        Query.
+    ts : time series
+    query : query
     """
 
     query_len = query.shape[0]
@@ -223,36 +152,28 @@ def plot_bestmatch_data(ts, query):
     fig.show(renderer="colab")
 
 
-def plot_bestmatch_results(ts, query, bestmatch_results):
+def plot_bestmatch_results(ts: np.ndarrray, query: np.ndarrray, bestmatch_results: dict) -> None:
     """
-    Visualize the best match results.
+    Visualize the best match results
 
     Parameters
     ----------
-    ts : numpy.ndarrray
-        Time series.
-
-    query : numpy.ndarrray
-        Query.
-
-    bestmatch_results : dict 
-        The output data found by the best match algorithm.  
+    ts : time series
+    query : query
+    bestmatch_results : output data found by the best match algorithm
     """
 
     # INSERT YOUR CODE
 
 
-def pie_chart(labels, values, plot_title='Pie chart'):
+def pie_chart(labels: np.ndarrray, values: np.ndarrray, plot_title='Pie chart') -> None:
     """
-    Build the pie chart.
+    Build the pie chart
 
     Parameters
     ----------
-    labels : numpy.ndarrray
-        Sector labels.
-
-    values : numpy.ndarrray
-        Values.
+    labels : sector labels
+    values : values
     """
 
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])

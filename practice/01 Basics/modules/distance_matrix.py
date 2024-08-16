@@ -10,7 +10,7 @@ class DistanceMatrix:
 
     Parameters
     ----------
-    metric : distance matric between two time series
+    metric : distance metric between two time series
     normalize : normalize or not time series
                 Options: {euclidean, dtw}
     """
