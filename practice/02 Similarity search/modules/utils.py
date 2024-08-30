@@ -10,11 +10,11 @@ def read_ts(file_path: str) -> np.ndarray:
 
     Parameters
     ----------
-    file_path : Path to file where time series data are stored
+    file_path: Path to file where time series data are stored
      
     Returns
     -------
-    ts : time series data
+    ts: time series data
     """
 
     ts = pd.read_csv(file_path, header=None, delim_whitespace=True)
@@ -29,11 +29,11 @@ def z_normalize(ts: np.ndarray) -> np.ndarray:
 
     Parameters
     ----------
-    ts : time series
+    ts: time series
     
     Returns
     -------
-    norm_ts : z-normalized time series
+    norm_ts: z-normalized time series
     """
 
     norm_ts = (ts - np.mean(ts, axis=0)) / np.std(ts, axis=0)
@@ -47,13 +47,13 @@ def sliding_window(ts: np.ndarray, window: int, step: int = 1) -> np.ndarray:
 
     Parameters
     ----------
-    ts : time series
-    window : size of the sliding window
-    step : step of the sliding window
+    ts: time series
+    window: size of the sliding window
+    step: step of the sliding window
 
     Returns
     -------
-    subs_matrix : matrix of subsequences
+    subs_matrix: matrix of subsequences
     """
     
     n = ts.shape[0]
@@ -75,11 +75,11 @@ def random_walk(n: int) -> np.ndarray:
 
     Parameters
     ----------
-    n : length of time series
+    n: length of time series
     
     Returns
     -------
-    random_walk_ts : generated time series
+    random_walk_ts: generated time series
     """
 
     value = 0

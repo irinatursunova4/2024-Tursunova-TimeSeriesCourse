@@ -12,9 +12,9 @@ def apply_exclusion_zone(array: np.ndarray, idx: int, excl_zone: int) -> np.ndar
     
     Parameters
     ----------
-    array : the array to apply the exclusion zone to
-    idx : the index around which the window should be centered
-    excl_zone : size of the exclusion zone
+    array: the array to apply the exclusion zone to
+    idx: the index around which the window should be centered
+    excl_zone: size of the exclusion zone
     
     Returns
     -------
@@ -34,11 +34,10 @@ def topK_match(dist_profile: np.ndarray, excl_zone: int, topK: int = 3, max_dist
     
     Parameters
     ----------
-    dist_profile : distances between query and subsequences of time series
-    excl_zone : size of the exclusion zone
-    topK : count of the best match subsequences
-    max_distance : maximum distance between query and a subsequence `S` for `S` to be considered a
-        match
+    dist_profile: distances between query and subsequences of time series
+    excl_zone: size of the exclusion zone
+    topK: count of the best match subsequences
+    max_distance: maximum distance between query and a subsequence `S` for `S` to be considered a match
     
     Returns
     -------
@@ -74,10 +73,10 @@ class BestMatchFinder:
     
     Parameters
     ----------
-    excl_zone_frac : exclusion zone fraction
-    topK : number of the best match subsequences
-    is_normalize : z-normalize or not subsequences before computing distances
-    r : warping window size
+    excl_zone_frac: exclusion zone fraction
+    topK: number of the best match subsequences
+    is_normalize: z-normalize or not subsequences before computing distances
+    r: warping window size
     """
 
     def __init__(self, excl_zone_frac: float = 1, topK: int = 3, is_normalize: bool = True, r: float = 0.05) -> None:
@@ -97,7 +96,7 @@ class BestMatchFinder:
         
         Parameters
         ----------
-        m : length of subsequence
+        m: length of subsequence
         
         Returns
         -------
@@ -132,8 +131,8 @@ class NaiveBestMatchFinder(BestMatchFinder):
         
         Parameters
         ----------
-        ts_data : time series
-        query : query, shorter than time series
+        ts_data: time series
+        query: query, shorter than time series
 
         Returns
         -------
@@ -166,10 +165,10 @@ class UCR_DTW(BestMatchFinder):
     
     Additional parameters
     ----------
-    not_pruned_num : number of non-pruned subsequences
+    not_pruned_num: number of non-pruned subsequences
     lb_Kim_num: number of subsequences that pruned by LB_Kim bounding
-    lb_KeoghQC_num : number of subsequences that pruned by LB_KeoghQC bounding
-    lb_KeoghCQ_num : number of subsequences that pruned by LB_KeoghCQ bounding
+    lb_KeoghQC_num: number of subsequences that pruned by LB_KeoghQC bounding
+    lb_KeoghCQ_num: number of subsequences that pruned by LB_KeoghCQ bounding
     """
 
     def __init__(self, excl_zone_frac: float = 1, topK: int = 3, is_normalize: bool = True, r: float = 0.05):
@@ -190,12 +189,12 @@ class UCR_DTW(BestMatchFinder):
         
         Parameters
         ----------
-        subs1 : the first subsequence
-        subs2 : the second subsequence
+        subs1: the first subsequence
+        subs2: the second subsequence
         
         Returns
         -------
-        lb_Kim : LB_Kim lower bound
+        lb_Kim: LB_Kim lower bound
         """
 
         lb_Kim = 0
@@ -211,13 +210,13 @@ class UCR_DTW(BestMatchFinder):
         
         Parameters
         ----------
-        subs1 : the first subsequence
-        subs2 : the second subsequence
-        r : warping window size
+        subs1: the first subsequence
+        subs2: the second subsequence
+        r: warping window size
         
         Returns
         -------
-        lb_Keogh : LB_Keogh lower bound
+        lb_Keogh: LB_Keogh lower bound
         """
 
         lb_Keogh = 0
@@ -233,7 +232,7 @@ class UCR_DTW(BestMatchFinder):
         
         Returns
         -------
-        Dictionary containing statistics
+            dictionary containing statistics
         """
 
         statistics = {

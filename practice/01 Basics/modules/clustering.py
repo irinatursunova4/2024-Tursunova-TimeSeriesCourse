@@ -14,17 +14,17 @@ class TimeSeriesHierarchicalClustering:
 
     Parameters
     ----------
-    n_clusters : number of clusters
-    method : linkage criterion.
-             Options: {single, complete, average, weighted}
+    n_clusters: number of clusters
+    method: linkage criterion.
+            Options: {single, complete, average, weighted}
     """
 
     def __init__(self, n_clusters: int = 3, method: str = 'complete') -> None:
 
-        self.n_clusters : int = n_clusters
-        self.method : str = method
-        self.model : AgglomerativeClustering | None = None
-        self.linkage_matrix : np.ndarray | None = None
+        self.n_clusters: int = n_clusters
+        self.method: str = method
+        self.model: AgglomerativeClustering | None = None
+        self.linkage_matrix: np.ndarray | None = None
 
 
     def _create_linkage_matrix(self) -> np.ndarray:
@@ -33,7 +33,7 @@ class TimeSeriesHierarchicalClustering:
 
         Returns
         -------
-        linkage matrix : linkage matrix
+        linkage matrix: linkage matrix
         """
 
         counts = np.zeros(self.model.children_.shape[0])
@@ -59,11 +59,11 @@ class TimeSeriesHierarchicalClustering:
 
         Parameters
         ----------
-        distance_matrix : distance matrix between instances of dataset with shape (ts_number, ts_number)
+        distance_matrix: distance matrix between instances of dataset with shape (ts_number, ts_number)
         
         Returns
         -------
-        self : the fitted model
+        self: the fitted model
         """
 
        # INSERT YOUR CODE
@@ -77,7 +77,7 @@ class TimeSeriesHierarchicalClustering:
 
         Parameters
         ----------
-        distance_matrix : distance matrix between instances of dataset with shape (ts_number, ts_number)
+        distance_matrix: distance matrix between instances of dataset with shape (ts_number, ts_number)
         
         Returns
         -------
@@ -95,11 +95,11 @@ class TimeSeriesHierarchicalClustering:
 
         Parameters
         ----------
-        dx : timeseries data with column "y" indicating cluster number
-        labels : labels of dataset's instances
-        leaves : leave node names from scipy dendrogram
-        gs : gridspec configurations
-        ts_hspace : horizontal space in gridspec for plotting time series
+        dx: timeseries data with column "y" indicating cluster number
+        labels: labels of dataset's instances
+        leaves: leave node names from scipy dendrogram
+        gs: gridspec configurations
+        ts_hspace: horizontal space in gridspec for plotting time series
         """
 
         prop_cycle = plt.rcParams['axes.prop_cycle']
@@ -132,10 +132,10 @@ class TimeSeriesHierarchicalClustering:
 
         Parameters
         ----------
-        df : dataframe with each row being the time window of readings
-        labels : labels of dataset's instances
-        ts_hspace : horizontal space for timeseries graph to be plotted
-        title : title of dendrogram
+        df: dataframe with each row being the time window of readings
+        labels: labels of dataset's instances
+        ts_hspace: horizontal space for timeseries graph to be plotted
+        title: title of dendrogram
         """
 
         max_cluster = len(self.linkage_matrix) + 1

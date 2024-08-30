@@ -14,17 +14,17 @@ class TimeSeriesKNN:
 
     Parameters
     ----------
-    n_neighbors : number of neighbors
-    metric : distance measure between time series
+    n_neighbors: number of neighbors
+    metric: distance measure between time series
              Options: {euclidean, dtw}
-    metric_params : dictionary containing parameters for the distance metric being used
+    metric_params: dictionary containing parameters for the distance metric being used
     """
     
     def __init__(self, n_neighbors: int = 3, metric: str = 'euclidean', metric_params: dict | None = None) -> None:
 
-        self.n_neighbors : int = n_neighbors
-        self.metric : str = metric
-        self.metric_params : dict | None = default_metrics_params[metric].copy()
+        self.n_neighbors: int = n_neighbors
+        self.metric: str = metric
+        self.metric_params: dict | None = default_metrics_params[metric].copy()
         if metric_params is not None:
             self.metric_params.update(metric_params)
 
@@ -35,12 +35,12 @@ class TimeSeriesKNN:
 
         Parameters
         ----------
-        X_train : train set with shape (ts_number, ts_length)
-        Y_train : labels of the train set
+        X_train: train set with shape (ts_number, ts_length)
+        Y_train: labels of the train set
         
         Returns
         -------
-        self : the fitted model
+        self: the fitted model
         """
        
         self.X_train = X_train
@@ -55,12 +55,12 @@ class TimeSeriesKNN:
         
         Parameters
         ----------
-        x_train : sample of the train set
-        x_test : sample of the test set
+        x_train: sample of the train set
+        x_test: sample of the test set
         
         Returns
         -------
-        dist : distance between the train and test samples
+        dist: distance between the train and test samples
         """
 
         dist = 0
@@ -76,11 +76,11 @@ class TimeSeriesKNN:
 
         Parameters
         ----------
-        x_test : sample of the test set
+        x_test: sample of the test set
         
         Returns
         -------
-        neighbors : k nearest neighbors (distance between neighbor and test sample, neighbor label) for test sample
+        neighbors: k nearest neighbors (distance between neighbor and test sample, neighbor label) for test sample
         """
 
         neighbors = []
@@ -90,17 +90,17 @@ class TimeSeriesKNN:
         return neighbors
 
 
-    def predict(self, X_test: np.ndarray) -> list[int]:
+    def predict(self, X_test: np.ndarray) -> np.ndarray:
         """
         Predict the class labels for samples of the test set
 
         Parameters
         ----------
-        X_test : test set with shape (ts_number, ts_length))
+        X_test: test set with shape (ts_number, ts_length))
 
         Returns
         -------
-        y_pred : class labels for each data sample from test set
+        y_pred: class labels for each data sample from test set
         """
 
         y_pred = []
@@ -116,12 +116,12 @@ def calculate_accuracy(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 
     Parameters
     ----------
-    y_true : ground truth (correct) labels
-    y_pred : predicted labels returned by a classifier
+    y_true: ground truth (correct) labels
+    y_pred: predicted labels returned by a classifier
 
     Returns
     -------
-    score : accuracy classification score
+    score: accuracy classification score
     """
 
     score = 0

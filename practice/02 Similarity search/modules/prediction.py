@@ -30,15 +30,15 @@ class BestMatchPredictor:
 
         Parameters
         ----------    
-        h : prediction horizon
-        match_algorithm : name of the best match algorithm
-        match_algorithm_params : input parameters for the best match algorithm
-        aggr_func : aggregate function
+        h: prediction horizon
+        match_algorithm: name of the best match algorithm
+        match_algorithm_params: input parameters for the best match algorithm
+        aggr_func: aggregate function
         """
 
         self.h: int = h
         self.match_alg: str = match_alg
-        self.match_alg_params : dict | None = default_match_alg_params[match_alg].copy()
+        self.match_alg_params: dict | None = default_match_alg_params[match_alg].copy()
         if match_alg_params is not None:
             self.match_alg_params.update(match_alg_params)
         self.agg_func: str = aggr_func
@@ -50,11 +50,11 @@ class BestMatchPredictor:
 
         Parameters
         ----------
-        topK_subs_predict_values : values of time series, which are located after topK subsequences
+        topK_subs_predict_values: values of time series, which are located after topK subsequences
 
         Returns
         -------
-        predict_values : prediction values
+        predict_values: prediction values
         """
 
         match self.agg_func:
@@ -74,12 +74,12 @@ class BestMatchPredictor:
         
         Parameters
         ----------
-        ts : time series
-        query : query, shorter than time series
+        ts: time series
+        query: query, shorter than time series
 
         Returns
         -------
-        predict_values : prediction values
+        predict_values: prediction values
         """
 
         predict_values = np.zeros((self.h,))

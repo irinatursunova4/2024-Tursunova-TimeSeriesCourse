@@ -7,12 +7,12 @@ def ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
 
     Parameters
     ----------
-    ts1 : the first time series
-    ts2 : the second time series
+    ts1: the first time series
+    ts2: the second time series
 
     Returns
     -------
-    ed_dist : euclidean distance between ts1 and ts2
+    ed_dist: euclidean distance between ts1 and ts2
     """
     
     ed_dist = 0
@@ -28,12 +28,12 @@ def norm_ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
 
     Parameters
     ----------
-    ts1 : the first time series
-    ts2 : the second time series
+    ts1: the first time series
+    ts2: the second time series
 
     Returns
     -------
-    norm_ed_dist : normalized Euclidean distance between ts1 and ts2s
+    norm_ed_dist: normalized Euclidean distance between ts1 and ts2s
     """
 
     norm_ed_dist = 0
@@ -49,13 +49,13 @@ def DTW_distance(ts1: np.ndarray, ts2: np.ndarray, r: float = 1) -> float:
 
     Parameters
     ----------
-    ts1 : first time series
-    ts2 : second time series
-    r : warping window size
+    ts1: first time series
+    ts2: second time series
+    r: warping window size
     
     Returns
     -------
-    dtw_dist : DTW distance between ts1 and ts2
+    dtw_dist: DTW distance between ts1 and ts2
     """
 
     dtw_dist = 0

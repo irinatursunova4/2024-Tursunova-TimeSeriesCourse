@@ -10,17 +10,14 @@ import plotly.express as px
 plotly.offline.init_notebook_mode(connected=True)
 
 
-def plot_ts_set(ts_set, title='Input Time Series Set'):
+def plot_ts_set(ts_set: np.ndarray, title: str = 'Input Time Series Set') -> None:
     """
-    Plot the time series set.
+    Plot the time series set
 
     Parameters
     ----------
-    ts_set : numpy.ndarrray (2d array of shape (ts_number, ts_length))
-        Time series set.
-    
-    title : str, default = 'Input Time Series Set'
-        Title of plot.
+    ts_set: time series set
+    title: title of plot
     """
 
     ts_num, m = ts_set.shape
@@ -57,18 +54,18 @@ def plot_ts_set(ts_set, title='Input Time Series Set'):
     fig.show(renderer="colab")
 
 
-def mplot2d(x: np.ndarrray, y: np.ndarrray, plot_title: str = None, x_title: str = None, y_title: str = None, trace_titles: np.ndarray = None):
+def mplot2d(x: np.ndarrray, y: np.ndarrray, plot_title: str = None, x_title: str = None, y_title: str = None, trace_titles: np.ndarray = None) -> None:
     """
     Multiple 2D Plots on figure for different experiments
 
     Parameters
     ----------
-    x : values of x axis of plot
-    y : values of y axis of plot
-    plot_title : title of plot
-    x_title : title of x axis of plot
-    y_title : title of y axis of plot
-    trace_titles : titles of plot traces (lines)
+    x: values of x axis of plot
+    y: values of y axis of plot
+    plot_title: title of plot
+    x_title: title of x axis of plot
+    y_title: title of y axis of plot
+    trace_titles: titles of plot traces (lines)
     """
 
     fig = go.Figure()
@@ -112,8 +109,8 @@ def plot_bestmatch_data(ts: np.ndarrray, query: np.ndarray) -> None:
 
     Parameters
     ----------
-    ts : time series
-    query : query
+    ts: time series
+    query: query
     """
 
     query_len = query.shape[0]
@@ -158,9 +155,9 @@ def plot_bestmatch_results(ts: np.ndarrray, query: np.ndarrray, bestmatch_result
 
     Parameters
     ----------
-    ts : time series
-    query : query
-    bestmatch_results : output data found by the best match algorithm
+    ts: time series
+    query: query
+    bestmatch_results: output data found by the best match algorithm
     """
 
     # INSERT YOUR CODE
@@ -172,8 +169,8 @@ def pie_chart(labels: np.ndarrray, values: np.ndarrray, plot_title='Pie chart') 
 
     Parameters
     ----------
-    labels : sector labels
-    values : values
+    labels: sector labels
+    values: values
     """
 
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])

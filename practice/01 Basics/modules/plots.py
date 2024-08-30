@@ -15,8 +15,8 @@ def plot_ts(ts_set: np.ndarray, plot_title: str = 'Input Time Series Set'):
 
     Parameters
     ----------
-    ts_set : time series set with shape (ts_number, ts_length)
-    plot_title : title of plot
+    ts_set: time series set with shape (ts_number, ts_length)
+    plot_title: title of plot
     """
 
     ts_num, m = ts_set.shape

@@ -10,13 +10,13 @@ def brute_force(ts: np.ndarray, query: np.ndarray, is_normalize: bool = True) ->
 
     Parameters
     ----------
-    ts : time series
-    query : query, shorter than time series
-    is_normalize : normalize or not time series and query
+    ts: time series
+    query: query, shorter than time series
+    is_normalize: normalize or not time series and query
 
     Returns
     -------
-    dist_profile : distance profile between query and time series
+    dist_profile: distance profile between query and time series
     """
 
     n = len(ts)
