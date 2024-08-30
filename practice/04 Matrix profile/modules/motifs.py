@@ -3,22 +3,18 @@ import numpy as np
 from modules.utils import *
 
 
-def top_k_motifs(matrix_profile, top_k=3):
+def top_k_motifs(matrix_profile: dict, top_k: int = 3) -> dict:
     """
-    Find the top-k motifs based on matrix profile.
+    Find the top-k motifs based on matrix profile
 
     Parameters
     ---------
-    matrix_profile : dict
-        The matrix profile structure.
-
-    top_k : int
-        Number of motifs.
+    matrix_profile: the matrix profile structure
+    top_k : number of motifs
 
     Returns
     --------
-    motifs : dict
-        Top-k motifs (left and right indices and distances).
+    motifs: top-k motifs (left and right indices and distances)
     """
 
     motifs_idx = []
