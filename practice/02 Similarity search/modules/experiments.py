@@ -4,9 +4,9 @@ import mass_ts as mts
 import timeit
 from IPython.display import display
 
-from modules.distance_profile import brute_force
-from modules.bestmatch import NaiveBestMatchFinder, UCR_DTW
-from modules.plots import mplot2d
+from distance_profile import brute_force
+from bestmatch import NaiveBestMatchFinder, UCR_DTW
+from plots import mplot2d
 
 
 def _get_param_values(exp_params: dict, param: str) -> list:

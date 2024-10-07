@@ -3,7 +3,7 @@ import numpy as np
 
 def ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
     """
-    Calculate the Euclidean distance
+    Calculate the Euclidean distance between two time series.
 
     Parameters
     ----------
@@ -14,13 +14,12 @@ def ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
     -------
     ed_dist: euclidean distance between ts1 and ts2
     """
-    
-    ed_dist = 0
+    if len(ts1) != len(ts2):
+        raise ValueError("Time series must have the same length")
 
-    # INSERT YOUR CODE
-
+    # Вычисление евклидова расстояния
+    ed_dist = np.sqrt(np.sum((ts1 - ts2) ** 2))
     return ed_dist
-
 
 def norm_ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
     """
@@ -36,30 +35,54 @@ def norm_ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
     norm_ed_dist: normalized Euclidean distance between ts1 and ts2s
     """
 
-    norm_ed_dist = 0
+    n = len(ts1)
 
-    # INSERT YOUR CODE
+    # Вычисляем средние и стандартные отклонения
+    mean_ts1 = np.mean(ts1)
+    mean_ts2 = np.mean(ts2)
+
+    std_ts1 = np.std(ts1)
+    std_ts2 = np.std(ts2)
+
+    # Вычисляем скалярное произведение временных рядов
+    dot_product = np.dot(ts1, ts2)
+
+    # Нормализованное расстояние
+    norm_ed_dist = np.sqrt(2 * n * (1 - dot_product / (n * std_ts1 * std_ts2)))
 
     return norm_ed_dist
-
-
-def DTW_distance(ts1: np.ndarray, ts2: np.ndarray, r: float = 1) -> float:
+def DTW_distance(ts1: np.ndarray, ts2: np.ndarray, r: float) -> float:
     """
-    Calculate DTW distance
+    Вычисление DTW расстояния между двумя временными рядами с ограничением полосы Сако–Чиба.
 
-    Parameters
+    Параметры
     ----------
-    ts1: first time series
-    ts2: second time series
-    r: warping window size
-    
-    Returns
+    ts1: np.ndarray
+        Первый временной ряд.
+    ts2: np.ndarray
+        Второй временной ряд.
+    r: float
+        Коэффициент радиуса полосы Сако–Чиба. Значение должно быть между 0 и 1.
+
+    Возвращает
     -------
-    dtw_dist: DTW distance between ts1 and ts2
+    float
+        DTW расстояние между ts1 и ts2.
     """
 
-    dtw_dist = 0
+    n = len(ts1)
+    radius = int(r * n)
 
-    # INSERT YOUR CODE
+    # Инициализация матрицы DTW
+    dtw = np.full((n + 1, n + 1), np.inf)
+    dtw[0, 0] = 0  # Начальная позиция
 
-    return dtw_dist
+    # Заполнение матрицы DTW с учетом ограничения полосы
+    for i in range(1, n + 1):
+        for j in range(max(1, i - radius), min(n + 1, i + radius + 1)):
+            cost = (ts1[i - 1] - ts2[j - 1]) ** 2  # Евклидово расстояние
+            dtw[i, j] = cost + min(dtw[i - 1, j],    # Вверх
+                                   dtw[i, j - 1],    # Влево
+                                   dtw[i - 1, j - 1]) # Вверх-влево
+
+    return dtw[n, n]

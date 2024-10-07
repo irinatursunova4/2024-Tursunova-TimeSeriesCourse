@@ -2,8 +2,8 @@ import numpy as np
 import math
 import copy
 
-from modules.utils import sliding_window, z_normalize
-from modules.metrics import DTW_distance
+from utils import sliding_window, z_normalize
+from metrics import DTW_distance
 
 
 def apply_exclusion_zone(array: np.ndarray, idx: int, excl_zone: int) -> np.ndarray:
@@ -150,11 +150,41 @@ class NaiveBestMatchFinder(BestMatchFinder):
         bsf = np.inf
 
         bestmatch = {
-            'index' : [],
+            'indices' : [],
             'distance' : []
         }
         
         # INSERT YOUR CODE
+         # Нормализация запроса
+        if self.is_normalize:
+            query = z_normalize(query)
+
+        for i in range(N):
+            # Нормализация временной серии
+            if self.is_normalize:
+                T_norm = z_normalize(ts_data[i, :])
+            else:
+                T_norm = ts_data[i, :]
+
+            # Вычисление дистанции DTW
+            dist = DTW_distance(query, T_norm, self.r)
+
+            # Применяем ограничивающую зону
+            if dist < bsf and i > excl_zone:
+                dist_profile[i] = dist
+                bestmatch['indices'].append(i)
+                bestmatch['distance'].append(dist)
+
+                # Обновление лучшего совпадения
+                if len(bestmatch['indices']) == self.topK:
+                    bsf = max(dist_profile[bestmatch['indices']])
+
+        # Формирование финального множества совпадений
+        if len(bestmatch['indices']) > self.topK:
+            # Оставляем только топ-K
+            topK_results = topK_match(dist_profile, excl_zone, self.topK, bsf)
+            bestmatch['indices'] = topK_results['indices']
+            bestmatch['distance'] = topK_results['distances']
 
         return bestmatch
 

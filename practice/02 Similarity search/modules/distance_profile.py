@@ -1,7 +1,7 @@
 import numpy as np
 
-from modules.utils import z_normalize
-from modules.metrics import ED_distance, norm_ED_distance
+from utils import z_normalize
+from metrics import ED_distance, norm_ED_distance
 
 
 def brute_force(ts: np.ndarray, query: np.ndarray, is_normalize: bool = True) -> np.ndarray:
@@ -26,5 +26,19 @@ def brute_force(ts: np.ndarray, query: np.ndarray, is_normalize: bool = True) ->
     dist_profile = np.zeros(shape=(N,))
 
     # INSERT YOUR CODE
+        # Шаг 2: Проверка на нормализацию
+    if is_normalize:
+        query = z_normalize(query)
+
+    # Шаг 4: Основной цикл по временном ряду
+    for i in range(N):
+        # Если нужно нормализовать, нормализуем текущую подпоследовательность
+        if is_normalize:
+            ts_i_m = z_normalize(ts[i:i + m])
+        else:
+            ts_i_m = ts[i:i + m]
+        
+        # Вычисляем расстояние Эвклида
+        dist_profile[i] = ED_distance(query, ts_i_m)
 
     return dist_profile
