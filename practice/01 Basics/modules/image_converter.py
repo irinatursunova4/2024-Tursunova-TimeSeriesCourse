@@ -33,6 +33,17 @@ class Image2TimeSeries:
         """
 
         # INSERT YOUR CODE
+         # 1. Преобразование изображения в оттенки серого
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        
+        # 2. Инверсия изображения
+        inverted = cv2.bitwise_not(gray)
+        
+        # 3. Небольшое размытие изображения
+        blurred = cv2.GaussianBlur(inverted, (5, 5), 0)
+        
+        # 4. Применение бинарного порогового преобразования
+        _, prep_img = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
         return prep_img
 

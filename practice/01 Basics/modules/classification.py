@@ -1,8 +1,10 @@
 import numpy as np
 
-from modules.metrics import *
-from modules.utils import z_normalize
-
+from metrics import *
+from utils import z_normalize
+from typing_extensions import Self
+import math
+from collections import Counter
 
 default_metrics_params = {'euclidean': {'normalize': True},
                          'dtw': {'normalize': True, 'r': 0.05}
@@ -63,11 +65,15 @@ class TimeSeriesKNN:
         dist: distance between the train and test samples
         """
 
-        dist = 0
-
         # INSERT YOUR CODE
+        if self.metric == 'euclidean':
+            return ED_distance(x_train, x_test)
 
-        return dist
+        elif self.metric == 'dtw':
+           return DTW_distance(x_train, x_test)  # Вам нужно будет реализовать dtw_distance
+        else:
+            raise ValueError("Unknown metric: {}".format(self.metric))
+
 
 
     def _find_neighbors(self, x_test: np.ndarray) -> list[tuple[float, int]]:
@@ -82,12 +88,14 @@ class TimeSeriesKNN:
         -------
         neighbors: k nearest neighbors (distance between neighbor and test sample, neighbor label) for test sample
         """
-
-        neighbors = []
-
-        # INSERT YOUR CODE
-
-        return neighbors
+        distances = []
+        for i in range(len(self.X_train)):
+            dist = self._distance(self.X_train[i], x_test)
+            distances.append((dist, self.Y_train[i]))  # (расстояние, метка класса)
+        
+        # Сортируем по расстоянию и берем k ближайших
+        distances.sort(key=lambda x: x[0])
+        return distances[:self.n_neighbors]
 
 
     def predict(self, X_test: np.ndarray) -> np.ndarray:
@@ -106,7 +114,13 @@ class TimeSeriesKNN:
         y_pred = []
 
         # INSERT YOUR CODE
-
+        for x in X_test:
+            neighbors = self._find_neighbors(x)
+            # Извлекаем классы соседей
+            neighbor_labels = [label for _, label in neighbors]
+            # Определяем наиболее частый класс
+            most_common = Counter(neighbor_labels).most_common(1)[0][0]
+            y_pred.append(most_common)
         return np.array(y_pred)
 
 
