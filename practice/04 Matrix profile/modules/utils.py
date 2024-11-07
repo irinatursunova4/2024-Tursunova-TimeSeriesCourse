@@ -36,6 +36,6 @@ def apply_exclusion_zone(a: np.ndarray, idx: int, excl_zone: int, val: float) ->
     zone_start = max(0, idx - excl_zone)
     zone_stop = min(a.shape[-1], idx + excl_zone)
 
-    a[zone_start : zone_stop + 1] = val
+    a[zone_start: zone_stop + 1] = val
 
     return a
